@@ -3,20 +3,42 @@
 	let selectedImage: string | null = $state(null);
 </script>
 
+<svelte:head>
+	<title>Art Commissions</title>
+	<meta
+		name="description"
+		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
+	/>
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://pocket.junttila.dev/" />
+	<meta property="og:title" content="Art Commissions" />
+	<meta
+		property="og:description"
+		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
+	/>
+	<meta property="og:image" content="https://saj-portfolio-lake.vercel.app/meta.webp" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://pocket.junttila.dev/" />
+	<meta property="twitter:title" content="Art Commissions" />
+	<meta
+		property="twitter:description"
+		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
+	/>
+	<meta property="twitter:image" content="https://saj-portfolio-lake.vercel.app/meta.webp" />
+</svelte:head>
+
 <!-- Hero Section -->
 <section class="relative h-screen w-full overflow-hidden">
 	<!-- Video Background -->
-	<video
-		autoplay
-		muted
-		loop
-		playsinline
-		controls
+	<img
 		class="absolute top-0 left-0 w-full h-full object-cover z-0"
-	>
-		<source src="/comm_sheet.mp4" type="video/mp4" />
-		Your browser does not support the video tag.
-	</video>
+		src="/city_streets.webp"
+		alt="City streets"
+	/>
 
 	<!-- Overlay -->
 	<div
@@ -58,7 +80,7 @@
 			onclick={() => (selectedImage = '/comm_ref-1.webp')}
 		>
 			<img
-				src="/comm_ref-1.webp"
+				src="/comm_ref.webp"
 				alt="Commission Reference"
 				class="w-full h-auto rounded-container-token"
 			/>
@@ -66,6 +88,32 @@
 	</div>
 
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+		<button
+			class="card p-2 variant-glass-surface shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500 order-2 md:order-1 cursor-zoom-in"
+			onclick={() => (selectedImage = '/comm_sheet.gif')}
+		>
+			<img
+				src="/comm_sheet.gif"
+				alt="Additional Info"
+				class="w-full h-auto rounded-container-token"
+			/>
+		</button>
+		<div class="space-y-4 order-1 md:order-2">
+			<h2 class="h2 text-4xl font-bold">Commission sheet</h2>
+			<p class="text-lg opacity-80 leading-relaxed">lorem ipsum</p>
+		</div>
+	</div>
+
+	<div class="grid pt-2 grid-cols-1 md:grid-cols-2 gap-8 items-center">
+		<div class="space-y-4">
+			<h2 class="h2 text-4xl font-bold">Process & Terms</h2>
+			<p class="text-lg opacity-80 leading-relaxed">
+				Please review my terms of service before commissioning. I work closely with clients to
+				ensure the final piece meets their expectations. Turnaround time varies depending on
+				complexity, but I strive to keep you updated every step of the way.
+			</p>
+			<a href="/contact" class="btn preset-tonal-secondary mt-4"> Get in Touch </a>
+		</div>
 		<button
 			class="card p-2 variant-glass-surface shadow-2xl -rotate-2 hover:rotate-0 transition-transform duration-500 order-2 md:order-1 cursor-zoom-in"
 			onclick={() => (selectedImage = '/additional_info.webp')}
@@ -76,15 +124,6 @@
 				class="w-full h-auto rounded-container-token"
 			/>
 		</button>
-		<div class="space-y-4 order-1 md:order-2">
-			<h2 class="h2 text-4xl font-bold">Process & Terms</h2>
-			<p class="text-lg opacity-80 leading-relaxed">
-				Please review my terms of service before commissioning. I work closely with clients to
-				ensure the final piece meets their expectations. Turnaround time varies depending on
-				complexity, but I strive to keep you updated every step of the way.
-			</p>
-			<a href="/contact" class="btn preset-tonal-secondary mt-4"> Get in Touch </a>
-		</div>
 	</div>
 </section>
 
