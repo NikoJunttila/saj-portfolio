@@ -77,7 +77,7 @@
 		</div>
 		<button
 			class="card p-2 variant-glass-surface shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 cursor-zoom-in"
-			onclick={() => (selectedImage = '/comm_ref-1.webp')}
+			onclick={() => (selectedImage = '/comm_ref.webp')}
 		>
 			<img
 				src="/comm_ref.webp"
