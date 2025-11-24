@@ -12,23 +12,23 @@
 
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://pocket.junttila.dev/" />
+	<meta property="og:url" content="https://sajportfolio.com/" />
 	<meta property="og:title" content="Art Commissions" />
 	<meta
 		property="og:description"
 		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
 	/>
-	<meta property="og:image" content="https://saj-portfolio-lake.vercel.app/meta.webp" />
+	<meta property="og:image" content="https://sajportfolio.com/meta.webp" />
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
-	<meta property="twitter:url" content="https://pocket.junttila.dev/" />
+	<meta property="twitter:url" content="https://sajportfolio.com/" />
 	<meta property="twitter:title" content="Art Commissions" />
 	<meta
 		property="twitter:description"
 		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
 	/>
-	<meta property="twitter:image" content="https://saj-portfolio-lake.vercel.app/meta.webp" />
+	<meta property="twitter:image" content="https://sajportfolio.com/meta.webp" />
 </svelte:head>
 
 <!-- Hero Section -->
