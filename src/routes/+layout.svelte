@@ -65,7 +65,8 @@
 		<div class="md:hidden font-bold text-xl flex items-center gap-3">
 			<a href="/" onclick={closeMenu}>SAJ</a>
 			<!-- Mobile Status Indicator -->
-			<div
+			<a
+				href="/contact"
 				class="flex items-center gap-2 text-xs font-medium px-2 py-1 rounded-full {commissionsOpen
 					? 'bg-success-500/20 text-success-300'
 					: 'bg-error-500/20 text-error-300'}"
@@ -74,7 +75,7 @@
 					class="w-2 h-2 rounded-full {commissionsOpen ? 'bg-success-500' : 'bg-error-500'}"
 				></div>
 				{commissionsOpen ? 'OPEN' : 'CLOSED'}
-			</div>
+			</a>
 		</div>
 
 		<!-- Desktop Navigation -->
@@ -85,7 +86,8 @@
 			<a href="/contact" class="anchor">Contact</a>
 
 			<!-- Desktop Status Indicator -->
-			<div
+			<a
+				href="/contact"
 				class="ml-auto flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full {commissionsOpen
 					? 'bg-success-500/20 text-success-300'
 					: 'bg-error-500/20 text-error-300'}"
@@ -94,7 +96,7 @@
 					class="w-2 h-2 rounded-full {commissionsOpen ? 'bg-success-500' : 'bg-error-500'}"
 				></div>
 				Commissions {commissionsOpen ? 'Open' : 'Closed'}
-			</div>
+			</a>
 
 			{#if isLoggedIn}
 				<div class="w-px h-6 bg-surface-500/30 mx-2"></div>

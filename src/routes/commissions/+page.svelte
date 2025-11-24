@@ -20,7 +20,15 @@
 </script>
 
 <div class="container mx-auto p-4">
-	<h1 class="h1 mb-4 text-center">Commissions</h1>
+	<div class="text-center mb-8">
+		<h1 class="h1 mb-4">Commissions</h1>
+		<div class="card p-6 max-w-2xl mx-auto">
+			<p class="text-lg mb-4">
+				Interested in commissioning a piece? Contact me via Instagram DMs to discuss your project!
+			</p>
+			<a href="/contact" class="btn preset-filled-primary-500"> Contact Me </a>
+		</div>
+	</div>
 
 	{#if commissions.length === 0}
 		<p class="text-center opacity-50">No commissions found.</p>
