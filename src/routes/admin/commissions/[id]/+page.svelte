@@ -11,19 +11,25 @@
 	// Form state
 	let title = $state('');
 	let description = $state('');
+	let type = $state('');
+	let status = $state('');
+	let client = $state('');
 	let enabled = $state(false);
 	let mainImageFiles: File[] = $state([]);
 	let newGalleryFiles: File[] = $state([]);
 	let isSaving = $state(false);
 
-	const id = page.params.id;
+	const id = page.params.id ?? '';
 
 	async function loadData() {
 		try {
 			commission = await pb.collection('commissions').getOne(id);
 			if (commission) {
-				title = commission.title;
-				description = commission.description;
+				title = commission.title || '';
+				description = commission.description || '';
+				type = commission.type || '';
+				status = commission.status || '';
+				client = commission.client || '';
 				enabled = commission.enabled;
 			}
 
@@ -45,8 +51,11 @@
 		isSaving = true;
 		try {
 			const formData = new FormData();
-			formData.append('title', title);
-			formData.append('description', description);
+			formData.append('title', title || '');
+			formData.append('description', description || '');
+			formData.append('type', type || '');
+			formData.append('status', status || '');
+			formData.append('client', client || '');
 			formData.append('enabled', enabled.toString());
 			if (mainImageFiles.length > 0) {
 				formData.append('image', mainImageFiles[0]);
@@ -123,6 +132,20 @@
 					<span>Title</span>
 					<input class="input" type="text" bind:value={title} />
 				</label>
+				<label class="label">
+					<span>Client</span>
+					<input class="input" type="text" bind:value={client} />
+				</label>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<label class="label">
+						<span>Type</span>
+						<input class="input" type="text" bind:value={type} />
+					</label>
+					<label class="label">
+						<span>Status</span>
+						<input class="input" type="text" bind:value={status} />
+					</label>
+				</div>
 				<label class="label">
 					<span>Description</span>
 					<textarea class="textarea" bind:value={description} rows="4"></textarea>

@@ -43,6 +43,17 @@
 	{#if commission}
 		<div class="mb-8 text-center">
 			<h1 class="h1 mb-2">{commission.title}</h1>
+			<div class="flex flex-wrap gap-2 justify-center mb-4">
+				{#if commission.type}
+					<span class="badge variant-soft-secondary">Type: {commission.type}</span>
+				{/if}
+				{#if commission.status}
+					<span class="badge variant-soft-primary">Status: {commission.status}</span>
+				{/if}
+			</div>
+			{#if commission.client}
+				<p class="text-sm opacity-70 mb-4">Client: {commission.client}</p>
+			{/if}
 			{#if commission.description}
 				<p class="opacity-70 max-w-2xl mx-auto">{commission.description}</p>
 			{/if}
@@ -53,7 +64,7 @@
 			/>
 		</div>
 
-		<h2 class="h2 mb-4">Gallery</h2>
+		<h2 class="h2 mb-4">Commission Gallery</h2>
 		{#if images.length === 0}
 			<p class="text-center opacity-50">No images in this commission.</p>
 		{:else}

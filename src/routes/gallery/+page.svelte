@@ -47,7 +47,7 @@
 				>
 					{#if work.image}
 						<img
-							src={pb.files.getURL(work, work.image)}
+							src={pb.files.getURL(work, work.image, { thumb: '400x400' })}
 							alt={work.title || 'Work Image'}
 							class="w-full aspect-square object-cover"
 						/>

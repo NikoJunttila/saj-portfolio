@@ -6,6 +6,9 @@
 
 	let title = $state('');
 	let description = $state('');
+	let type = $state('');
+	let status = $state('');
+	let client = $state('');
 	let mainImageFiles: File[] = $state([]);
 	let files: File[] = $state([]);
 	let isSubmitting = $state(false);
@@ -27,6 +30,9 @@
 			const commissionFormData = new FormData();
 			commissionFormData.append('title', title);
 			commissionFormData.append('description', description);
+			commissionFormData.append('type', type);
+			commissionFormData.append('status', status);
+			commissionFormData.append('client', client);
 			commissionFormData.append('image', mainImageFiles[0]);
 
 			const commission = await pb.collection('commissions').create(commissionFormData);
@@ -62,6 +68,20 @@
 			<span>Title</span>
 			<input class="input" type="text" bind:value={title} placeholder="Commission Title" />
 		</label>
+		<label class="label">
+			<span>Client</span>
+			<input class="input" type="text" bind:value={client} placeholder="Client Name" />
+		</label>
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+			<label class="label">
+				<span>Type</span>
+				<input class="input" type="text" bind:value={type} placeholder="e.g. Full Body, Portrait" />
+			</label>
+			<label class="label">
+				<span>Status</span>
+				<input class="input" type="text" bind:value={status} placeholder="e.g. Sketching, Done" />
+			</label>
+		</div>
 		<label class="label">
 			<span>Description</span>
 			<textarea class="textarea" bind:value={description} placeholder="Commission Description"
