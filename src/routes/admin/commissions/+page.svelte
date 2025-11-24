@@ -16,6 +16,18 @@
 				console.error('Error fetching commissions:', err);
 			});
 	});
+
+	async function deleteCommission(id: string) {
+		if (!confirm('Are you sure you want to delete this commission?')) return;
+
+		try {
+			await pb.collection('commissions').delete(id);
+			commissions = commissions.filter((c) => c.id !== id);
+		} catch (err) {
+			console.error('Error deleting commission:', err);
+			alert('Failed to delete commission');
+		}
+	}
 </script>
 
 <div class="container mx-auto p-4">
@@ -51,9 +63,17 @@
 						</p>
 					</div>
 
-					<a href="/admin/commissions/{commission.id}" class="btn preset-filled-secondary-500">
-						Edit
-					</a>
+					<div class="flex gap-2">
+						<a href="/admin/commissions/{commission.id}" class="btn preset-filled-secondary-500">
+							Edit
+						</a>
+						<button
+							class="btn preset-filled-error-500"
+							onclick={() => deleteCommission(commission.id)}
+						>
+							Delete
+						</button>
+					</div>
 				</div>
 			{/each}
 		</div>
