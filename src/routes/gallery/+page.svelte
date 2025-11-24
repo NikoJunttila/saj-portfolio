@@ -2,23 +2,106 @@
 	import { pb } from '$lib/pocketbase';
 	import type { RecordModel } from 'pocketbase';
 	import { fade, scale, fly } from 'svelte/transition';
-	import { X, ChevronLeft, ChevronRight } from '@lucide/svelte';
+	import { X, ChevronLeft, ChevronRight, LoaderCircle } from '@lucide/svelte';
 
 	let works: RecordModel[] = $state([]);
 	let selectedWork: RecordModel | null = $state(null);
 	let selectedIndex = $state(0);
 
-	$effect(() => {
-		pb.collection('works')
-			.getFullList({
+	// Pagination state
+	let currentPage = $state(1);
+	let totalPages = $state(1);
+	let totalItems = $state(0);
+	let isLoading = $state(false);
+	let hasMore = $state(true);
+	const perPage = 20;
+
+	// Intersection observer for infinite scroll
+	let loadMoreTrigger: HTMLElement | undefined = $state();
+
+	async function loadWorks(page: number) {
+		if (isLoading || !hasMore) return;
+
+		isLoading = true;
+		try {
+			const result = await pb.collection('works').getList(page, perPage, {
 				sort: '-created'
-			})
-			.then((records) => {
-				works = records;
-			})
-			.catch((err) => {
-				console.error('Error fetching works:', err);
 			});
+
+			if (page === 1) {
+				works = result.items;
+			} else {
+				works = [...works, ...result.items];
+			}
+
+			totalPages = result.totalPages;
+			totalItems = result.totalItems;
+			hasMore = page < result.totalPages;
+			currentPage = page;
+
+			// Debug logging
+			console.log(
+				'Loaded page:',
+				page,
+				'Total pages:',
+				result.totalPages,
+				'Has more:',
+				page < result.totalPages,
+				'Items loaded:',
+				works.length,
+				'Total items:',
+				result.totalItems
+			);
+		} catch (err) {
+			console.error('Error fetching works:', err);
+		} finally {
+			isLoading = false;
+		}
+	}
+
+	// Initial load - only run once
+	let hasLoaded = $state(false);
+	$effect(() => {
+		if (!hasLoaded) {
+			hasLoaded = true;
+			loadWorks(1);
+		}
+	});
+
+	// Intersection observer for infinite scroll
+	$effect(() => {
+		if (!loadMoreTrigger || !hasMore) return;
+
+		console.log('Setting up intersection observer. hasMore:', hasMore);
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				const isIntersecting = entries[0].isIntersecting;
+				console.log(
+					'Intersection changed:',
+					isIntersecting,
+					'hasMore:',
+					hasMore,
+					'isLoading:',
+					isLoading
+				);
+
+				// Check conditions at the time of intersection
+				// isLoading is read here but doesn't create a reactive dependency
+				if (isIntersecting && !isLoading && hasMore) {
+					console.log('Loading next page:', currentPage + 1);
+					loadWorks(currentPage + 1);
+				}
+			},
+			{ threshold: 0.1 }
+		);
+
+		observer.observe(loadMoreTrigger);
+
+		return () => {
+			console.log('Cleaning up intersection observer');
+			observer.disconnect();
+		};
 	});
 
 	function openLightbox(work: RecordModel, index: number) {
@@ -63,9 +146,14 @@
 		<p class="text-lg opacity-80 max-w-2xl mx-auto">
 			Explore my collection of artwork and creative projects
 		</p>
+		{#if totalItems > 0}
+			<p class="text-sm opacity-60 mt-2">
+				Showing {works.length} of {totalItems} works
+			</p>
+		{/if}
 	</div>
 
-	{#if works.length === 0}
+	{#if works.length === 0 && !isLoading}
 		<p class="text-center opacity-50">No works found.</p>
 	{:else}
 		<!-- Masonry-style grid -->
@@ -100,6 +188,24 @@
 				</button>
 			{/each}
 		</div>
+
+		<!-- Loading indicator and infinite scroll trigger -->
+		{#if hasMore}
+			<div bind:this={loadMoreTrigger} class="flex justify-center items-center py-12">
+				{#if isLoading}
+					<div class="flex items-center gap-3 text-primary-500">
+						<LoaderCircle class="w-6 h-6 animate-spin" />
+						<span class="text-lg">Loading more works...</span>
+					</div>
+				{:else}
+					<div class="text-sm opacity-50">Scroll to load more...</div>
+				{/if}
+			</div>
+		{:else if works.length > 0}
+			<div class="text-center py-12 opacity-50">
+				<p>You've reached the end of the gallery</p>
+			</div>
+		{/if}
 	{/if}
 </div>
 
