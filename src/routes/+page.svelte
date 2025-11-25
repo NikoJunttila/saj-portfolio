@@ -44,10 +44,10 @@
 	<div
 		class="absolute top-0 left-0 w-full h-full bg-black/50 z-10 flex flex-col items-center justify-center text-center p-4"
 	>
-		<h1 class="h1 text-6xl md:text-8xl font-bold text-white mb-6 drop-shadow-lg">
+		<h1 class="h1 text-4xl md:text-6xl lg:text-8xl font-bold text-white mb-6 drop-shadow-lg">
 			Art Commissions
 		</h1>
-		<p class="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl drop-shadow-md">
+		<p class="text-xl md:text-2xl lg:text-4xl text-white/90 mb-8 max-w-2xl drop-shadow-md">
 			Bring your characters to life with high-quality, custom illustrations.
 		</p>
 		<a
