@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Instagram, Coffee, Mail } from '@lucide/svelte';
+	import { siteConfig } from '$lib/config';
 </script>
 
 <div class="container mx-auto p-4 max-w-4xl">
@@ -13,7 +14,7 @@
 	<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 		<!-- Instagram Card -->
 		<a
-			href="https://instagram.com"
+			href={siteConfig.socials.instagram}
 			target="_blank"
 			rel="noopener noreferrer"
 			class="card p-8 hover:scale-105 transition-transform duration-200 flex flex-col items-center gap-4 text-center group"
@@ -34,7 +35,7 @@
 
 		<!-- Ko-fi Card -->
 		<a
-			href="https://ko-fi.com"
+			href={siteConfig.socials.kofi}
 			target="_blank"
 			rel="noopener noreferrer"
 			class="card p-8 hover:scale-105 transition-transform duration-200 flex flex-col items-center gap-4 text-center group"
@@ -67,7 +68,7 @@
 		<div class="flex flex-wrap gap-4 justify-center">
 			<a href="/commissions" class="btn preset-tonal-primary-500"> View Portfolio </a>
 			<a
-				href="https://instagram.com"
+				href={siteConfig.socials.instagram}
 				target="_blank"
 				rel="noopener noreferrer"
 				class="btn preset-filled-primary-500"

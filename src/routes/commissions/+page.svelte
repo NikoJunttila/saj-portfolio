@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { pb } from '$lib/pocketbase';
 	import type { RecordModel } from 'pocketbase';
+	import { siteConfig } from '$lib/config';
 	import { MessageCircle, Palette, Clock } from '@lucide/svelte';
 
 	let commissions: RecordModel[] = $state([]);
@@ -37,7 +38,9 @@
 				Interested in commissioning a piece? Contact me via Instagram DMs to discuss your project,
 				share your ideas, and get a personalized quote!
 			</p>
-			<a href="/contact" class="btn preset-filled-primary-500 btn-lg"> Contact Me on Instagram </a>
+			<a href={siteConfig.socials.instagram} class="btn preset-filled-primary-500 btn-lg">
+				Contact Me on Instagram
+			</a>
 		</div>
 	</div>
 
