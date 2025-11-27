@@ -1,9 +1,19 @@
 <!doctype html>
-<html lang="en" data-theme="theme">
+<html lang="en" data-mode="dark" data-theme="theme">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%sveltekit.head%
+		<script>
+			var dID = 'ce639183-a243-410f-9b76-743f907b09e6';
+		</script>
+
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/gh/NikoJunttila/userAnalytics@main/javascript/tracker.js"
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		></script>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>

@@ -42,7 +42,7 @@
 
 	<!-- Overlay -->
 	<div
-		class="absolute top-0 left-0 w-full h-full bg-black/50 z-10 flex flex-col items-center justify-center text-center p-4"
+		class="absolute top-0 left-0 w-full h-full bg-black/50 z-10 flex flex-col items-center justify-center text-center"
 	>
 		<h1 class="h1 text-4xl md:text-6xl lg:text-8xl font-bold text-white mb-6 drop-shadow-lg">
 			Art Commissions
