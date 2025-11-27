@@ -40,6 +40,18 @@
 </script>
 
 <div class="container mx-auto p-4">
+	<!-- Back Button -->
+	<a
+		href="/commissions"
+		class="inline-flex items-center gap-2 mb-6 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors font-medium"
+	>
+		<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"
+			></path>
+		</svg>
+		Back to Commissions
+	</a>
+
 	{#if commission}
 		<div class="mb-8 text-center">
 			<h1 class="h1 mb-2">{commission.title}</h1>
