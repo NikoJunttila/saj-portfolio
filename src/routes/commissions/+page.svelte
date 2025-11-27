@@ -63,7 +63,7 @@
 			<div class="flex bg-surface-500/10 p-1 rounded-token">
 				<button
 					class="btn btn-sm {filterStatus === 'all'
-						? 'variant-filled-tertiary'
+						? 'bg-tertiary-500 text-white'
 						: 'variant-ghost-surface'}"
 					onclick={() => (filterStatus = 'all')}
 				>
@@ -71,7 +71,7 @@
 				</button>
 				<button
 					class="btn btn-sm {filterStatus === 'in_progress'
-						? 'variant-filled-secondary'
+						? 'bg-secondary-500 text-white'
 						: 'variant-ghost-surface'}"
 					onclick={() => (filterStatus = 'in_progress')}
 				>
@@ -79,7 +79,7 @@
 				</button>
 				<button
 					class="btn btn-sm {filterStatus === 'completed'
-						? 'variant-filled-success'
+						? 'bg-success-500 text-white'
 						: 'variant-ghost-surface'}"
 					onclick={() => (filterStatus = 'completed')}
 				>

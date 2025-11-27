@@ -149,6 +149,11 @@
 			{#if isLoggedIn}
 				<div class="w-px h-6 bg-surface-300 dark:bg-surface-700 mx-2"></div>
 				<a
+					href="/admin"
+					class="anchor font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+					>Admin</a
+				>
+				<a
 					href="/admin/commissions"
 					class="anchor font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
 					>Commissions</a
@@ -238,6 +243,9 @@
 			<a href="/contact" class="anchor text-lg" onclick={closeMenu}>Contact</a>
 			{#if isLoggedIn}
 				<hr class="border-surface-500/30" />
+				<a href="/admin/works" class="anchor text-lg font-bold text-primary-500" onclick={closeMenu}
+					>Admin</a
+				>
 				<a
 					href="/admin/commissions"
 					class="anchor text-lg font-bold text-primary-500"
