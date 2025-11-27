@@ -5,6 +5,16 @@
 	import { MessageCircle, Palette, Clock } from '@lucide/svelte';
 
 	let commissions: RecordModel[] = $state([]);
+	let filterStatus: 'all' | 'completed' | 'in_progress' = $state('all');
+
+	let filteredCommissions = $derived(
+		commissions.filter((c) => {
+			if (filterStatus === 'all') return true;
+			if (filterStatus === 'completed') return c.completed;
+			if (filterStatus === 'in_progress') return !c.completed;
+			return true;
+		})
+	);
 
 	$effect(() => {
 		pb.collection('commissions')
@@ -46,14 +56,45 @@
 
 	<!-- Portfolio Section -->
 	<div class="mb-8">
-		<h2 class="h2 text-center mb-8">Recent Commissions</h2>
-		{#if commissions.length === 0}
+		<div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+			<h2 class="h2 text-center md:text-left">Recent Commissions</h2>
+
+			<!-- Filter Controls -->
+			<div class="flex bg-surface-500/10 p-1 rounded-token">
+				<button
+					class="btn btn-sm {filterStatus === 'all'
+						? 'variant-filled-tertiary'
+						: 'variant-ghost-surface'}"
+					onclick={() => (filterStatus = 'all')}
+				>
+					All
+				</button>
+				<button
+					class="btn btn-sm {filterStatus === 'in_progress'
+						? 'variant-filled-secondary'
+						: 'variant-ghost-surface'}"
+					onclick={() => (filterStatus = 'in_progress')}
+				>
+					In Progress
+				</button>
+				<button
+					class="btn btn-sm {filterStatus === 'completed'
+						? 'variant-filled-success'
+						: 'variant-ghost-surface'}"
+					onclick={() => (filterStatus = 'completed')}
+				>
+					Completed
+				</button>
+			</div>
+		</div>
+
+		{#if filteredCommissions.length === 0}
 			<div class="card p-12 text-center">
-				<p class="opacity-50 text-lg">No commissions to display yet.</p>
+				<p class="opacity-50 text-lg">No commissions found for this filter.</p>
 			</div>
 		{:else}
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-				{#each commissions as commission (commission.id)}
+				{#each filteredCommissions as commission (commission.id)}
 					<a
 						href="/commissions/{commission.id}"
 						class="card p-0 overflow-hidden hover:scale-[1.03] hover:shadow-2xl transition-all duration-300 group"

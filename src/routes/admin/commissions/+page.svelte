@@ -62,6 +62,18 @@
 			}
 		}
 	}
+
+	async function toggleCommissionStatus(commission: RecordModel, completed: boolean) {
+		try {
+			await pb.collection('commissions').update(commission.id, { completed });
+			commission.completed = completed;
+		} catch (err) {
+			console.error('Error updating commission status:', err);
+			alert('Failed to update commission status');
+			// Revert the checkbox state if the update fails (optional but good UX)
+			commission.completed = !completed;
+		}
+	}
 </script>
 
 <div class="container mx-auto p-4">
@@ -97,6 +109,15 @@
 					<h3 class="h3 font-bold">{commission.title || 'Untitled'}</h3>
 					<p class="text-sm opacity-70">Client: {commission.client_name}</p>
 					<p class="text-sm opacity-70">Status: {commission.status}</p>
+					<label class="flex items-center gap-2 cursor-pointer label mt-2">
+						<span>Completed</span>
+						<input
+							class="checkbox"
+							type="checkbox"
+							checked={commission.completed}
+							onchange={(e) => toggleCommissionStatus(commission, e.currentTarget.checked)}
+						/>
+					</label>
 				</section>
 				<footer class="flex justify-end gap-2 mt-auto">
 					<a href="/admin/commissions/{commission.id}" class="btn variant-filled-secondary btn-sm"

@@ -66,7 +66,7 @@
 			reference images, and budget. I'll get back to you as soon as possible!
 		</p>
 		<div class="flex flex-wrap gap-4 justify-center">
-			<a href="/commissions" class="btn preset-tonal-primary-500"> View Portfolio </a>
+			<a href="/gallery" class="btn preset-tonal-primary-500"> View gallery</a>
 			<a
 				href={siteConfig.socials.instagram}
 				target="_blank"
