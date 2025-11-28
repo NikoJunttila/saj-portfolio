@@ -147,6 +147,33 @@
 			selectedImageIndex--;
 		}
 	}
+
+	// Swipe handling
+	let touchStartX = 0;
+	let touchEndX = 0;
+	const minSwipeDistance = 50;
+
+	function handleTouchStart(e: TouchEvent) {
+		touchStartX = e.changedTouches[0].screenX;
+	}
+
+	function handleTouchEnd(e: TouchEvent) {
+		touchEndX = e.changedTouches[0].screenX;
+		handleSwipe();
+	}
+
+	function handleSwipe() {
+		const distance = touchEndX - touchStartX;
+		if (Math.abs(distance) < minSwipeDistance) return;
+
+		if (distance > 0) {
+			// Swiped Right -> Prev
+			prevImage();
+		} else {
+			// Swiped Left -> Next
+			nextImage();
+		}
+	}
 </script>
 
 <svelte:window
@@ -265,6 +292,8 @@
 			tabindex="0"
 			aria-label="Close lightbox"
 			onkeydown={(e) => e.key === 'Enter' && closeLightbox()}
+			ontouchstart={handleTouchStart}
+			ontouchend={handleTouchEnd}
 		></div>
 
 		<!-- Navigation Buttons -->
