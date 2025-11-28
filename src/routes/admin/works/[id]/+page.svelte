@@ -7,6 +7,7 @@
 	let work: RecordModel | null = $state(null);
 	let title = $state('');
 	let description = $state('');
+	let groupId = $state('');
 	let newImage: File | null = $state(null);
 	let isSaving = $state(false);
 
@@ -22,6 +23,7 @@
 				work = record;
 				title = record.title;
 				description = record.description;
+				groupId = record.group_id;
 			})
 			.catch((err) => {
 				console.error('Error fetching work:', err);
@@ -45,6 +47,11 @@
 			const formData = new FormData();
 			formData.append('title', title);
 			formData.append('description', description);
+			if (groupId) {
+				formData.append('group_id', groupId);
+			} else {
+				formData.append('group_id', '');
+			}
 			if (newImage) {
 				formData.append('image', newImage);
 			}
@@ -96,6 +103,27 @@
 			<label class="label">
 				<span>Description</span>
 				<textarea class="textarea" rows="4" bind:value={description} disabled={isSaving}></textarea>
+			</label>
+
+			<label class="label">
+				<span>Group ID</span>
+				<div class="flex gap-2">
+					<input
+						class="input"
+						type="text"
+						bind:value={groupId}
+						disabled={isSaving}
+						placeholder="Optional group ID"
+					/>
+					<button
+						class="btn-icon preset-tonal"
+						onclick={() => (groupId = crypto.randomUUID())}
+						disabled={isSaving}
+						title="Generate new Group ID"
+					>
+						🎲
+					</button>
+				</div>
 			</label>
 
 			<label class="label">

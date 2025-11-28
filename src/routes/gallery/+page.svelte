@@ -2,11 +2,31 @@
 	import { pb } from '$lib/pocketbase';
 	import type { RecordModel } from 'pocketbase';
 	import { fade, scale, fly } from 'svelte/transition';
-	import { X, ChevronLeft, ChevronRight, LoaderCircle } from '@lucide/svelte';
+	import { X, ChevronLeft, ChevronRight, LoaderCircle, Layers } from '@lucide/svelte';
 
 	let works: RecordModel[] = $state([]);
-	let selectedWork: RecordModel | null = $state(null);
-	let selectedIndex = $state(0);
+	let selectedGroup: { id: string; items: RecordModel[] } | null = $state(null);
+	let selectedImageIndex = $state(0);
+
+	let groupedWorks = $derived.by(() => {
+		const groups: { id: string; items: RecordModel[] }[] = [];
+		const groupMap = new Map<string, { id: string; items: RecordModel[] }>();
+
+		for (const work of works) {
+			if (work.group_id) {
+				if (groupMap.has(work.group_id)) {
+					groupMap.get(work.group_id)!.items.push(work);
+				} else {
+					const group = { id: work.group_id, items: [work] };
+					groupMap.set(work.group_id, group);
+					groups.push(group);
+				}
+			} else {
+				groups.push({ id: work.id, items: [work] });
+			}
+		}
+		return groups;
+	});
 
 	// Pagination state
 	let currentPage = $state(1);
@@ -104,38 +124,37 @@
 		};
 	});
 
-	function openLightbox(work: RecordModel, index: number) {
-		selectedWork = work;
-		selectedIndex = index;
+	function openLightbox(group: { id: string; items: RecordModel[] }) {
+		selectedGroup = group;
+		selectedImageIndex = 0;
 		document.body.style.overflow = 'hidden';
 	}
 
 	function closeLightbox() {
-		selectedWork = null;
+		selectedGroup = null;
+		selectedImageIndex = 0;
 		document.body.style.overflow = '';
 	}
 
-	function nextWork() {
-		if (selectedIndex < works.length - 1) {
-			selectedIndex++;
-			selectedWork = works[selectedIndex];
+	function nextImage() {
+		if (selectedGroup && selectedImageIndex < selectedGroup.items.length - 1) {
+			selectedImageIndex++;
 		}
 	}
 
-	function prevWork() {
-		if (selectedIndex > 0) {
-			selectedIndex--;
-			selectedWork = works[selectedIndex];
+	function prevImage() {
+		if (selectedImageIndex > 0) {
+			selectedImageIndex--;
 		}
 	}
 </script>
 
 <svelte:window
 	onkeydown={(e) => {
-		if (selectedWork) {
+		if (selectedGroup) {
 			if (e.key === 'Escape') closeLightbox();
-			if (e.key === 'ArrowRight') nextWork();
-			if (e.key === 'ArrowLeft') prevWork();
+			if (e.key === 'ArrowRight') nextImage();
+			if (e.key === 'ArrowLeft') prevImage();
 		}
 	}}
 />
@@ -158,11 +177,12 @@
 	{:else}
 		<!-- Masonry-style grid -->
 		<div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-			{#each works as work, index (work.id)}
+			{#each groupedWorks as group (group.id)}
+				{@const work = group.items[0]}
 				<button
-					class="card p-0 overflow-hidden hover:scale-[1.02] hover:shadow-xl transition-all duration-300 cursor-pointer w-full break-inside-avoid group relative"
-					onclick={() => openLightbox(work, index)}
-					onkeydown={(e) => e.key === 'Enter' && openLightbox(work, index)}
+					class="card p-0 overflow-visible hover:scale-[1.02] hover:shadow-xl transition-all duration-300 cursor-pointer w-full break-inside-avoid group relative mb-4"
+					onclick={() => openLightbox(group)}
+					onkeydown={(e) => e.key === 'Enter' && openLightbox(group)}
 				>
 					{#if work.image}
 						<div class="relative overflow-hidden">
@@ -175,10 +195,29 @@
 							<div
 								class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
 							>
-								{#if work.title}
-									<h3 class="text-white font-bold text-lg">{work.title}</h3>
-								{/if}
+								<div class="text-left">
+									{#if work.title}
+										<h3 class="text-white font-bold text-lg">{work.title}</h3>
+									{/if}
+								</div>
 							</div>
+							{#if group.items.length > 1}
+								<div class="absolute top-2 right-2 z-10 bg-black/50 rounded-lg">
+									<span
+										class="badge variant-filled-surface shadow-lg flex gap-2 items-center font-bold text-3xl"
+									>
+										<Layers class="w-12 h-12" />
+										{group.items.length}
+									</span>
+								</div>
+								<!-- Stack effect layers -->
+								<div
+									class="absolute inset-0 bg-surface-200 dark:bg-surface-700 -z-10 translate-x-1 translate-y-1 rounded-container-token shadow-sm border border-surface-500/10"
+								></div>
+								<div
+									class="absolute inset-0 bg-surface-300 dark:bg-surface-600 -z-20 translate-x-2 translate-y-2 rounded-container-token shadow-sm border border-surface-500/10"
+								></div>
+							{/if}
 						</div>
 					{:else}
 						<div class="w-full aspect-square bg-surface-500/20 flex items-center justify-center">
@@ -209,7 +248,8 @@
 	{/if}
 </div>
 
-{#if selectedWork}
+{#if selectedGroup}
+	{@const currentWork = selectedGroup.items[selectedImageIndex]}
 	<!-- Lightbox Container -->
 	<div
 		class="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -228,20 +268,20 @@
 		></div>
 
 		<!-- Navigation Buttons -->
-		{#if selectedIndex > 0}
+		{#if selectedImageIndex > 0}
 			<button
 				class="absolute left-4 top-1/2 -translate-y-1/2 z-20 btn-icon btn-icon-lg variant-filled-surface hover:scale-110 transition-transform"
-				onclick={prevWork}
+				onclick={prevImage}
 				transition:fly={{ x: -20, duration: 200 }}
 			>
 				<ChevronLeft class="w-6 h-6" />
 			</button>
 		{/if}
 
-		{#if selectedIndex < works.length - 1}
+		{#if selectedImageIndex < selectedGroup.items.length - 1}
 			<button
 				class="absolute right-4 top-1/2 -translate-y-1/2 z-20 btn-icon btn-icon-lg variant-filled-surface hover:scale-110 transition-transform"
-				onclick={nextWork}
+				onclick={nextImage}
 				transition:fly={{ x: 20, duration: 200 }}
 			>
 				<ChevronRight class="w-6 h-6" />
@@ -265,31 +305,48 @@
 			<div
 				class="flex-1 flex items-center justify-center bg-surface-900/50 backdrop-blur-md rounded-container-token overflow-hidden p-4"
 			>
-				{#if selectedWork.image}
-					<img
-						src={pb.files.getURL(selectedWork, selectedWork.image)}
-						alt={selectedWork.title}
-						class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
-					/>
+				{#if currentWork.image}
+					{#key currentWork.id}
+						<img
+							src={pb.files.getURL(currentWork, currentWork.image)}
+							alt={currentWork.title}
+							class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
+							transition:fade={{ duration: 200 }}
+						/>
+					{/key}
 				{:else}
 					<div class="p-10 opacity-50">No Image</div>
 				{/if}
 			</div>
 
 			<!-- Info Panel -->
-			{#if selectedWork.title || selectedWork.description}
+			{#if currentWork.title || currentWork.description || selectedGroup.items.length > 1}
 				<div
 					class="bg-surface-800/90 backdrop-blur-md rounded-container-token p-6 max-w-2xl mx-auto w-full"
 				>
-					{#if selectedWork.title}
-						<h2 class="h2 font-bold mb-2">{selectedWork.title}</h2>
+					{#if currentWork.title}
+						<h2 class="h2 font-bold mb-2">{currentWork.title}</h2>
 					{/if}
-					{#if selectedWork.description}
-						<p class="opacity-80 whitespace-pre-wrap">{selectedWork.description}</p>
+					{#if currentWork.description}
+						<p class="opacity-80 whitespace-pre-wrap">{currentWork.description}</p>
 					{/if}
-					<div class="mt-4 text-sm opacity-60">
-						{selectedIndex + 1} / {works.length}
-					</div>
+					{#if selectedGroup.items.length > 1}
+						<div class="mt-4 flex items-center justify-between text-sm opacity-60">
+							<span>
+								Image {selectedImageIndex + 1} of {selectedGroup.items.length}
+							</span>
+							<!-- Mini thumbnails could go here -->
+							<div class="flex gap-1">
+								{#each selectedGroup.items as _, i}
+									<div
+										class="w-2 h-2 rounded-full transition-colors {i === selectedImageIndex
+											? 'bg-primary-500'
+											: 'bg-surface-500'}"
+									></div>
+								{/each}
+							</div>
+						</div>
+					{/if}
 				</div>
 			{/if}
 		</div>

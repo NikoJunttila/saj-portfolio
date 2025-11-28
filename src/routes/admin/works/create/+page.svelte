@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 
 	let files: FileList | null = $state(null);
-	let items: { file: File; title: string; description: string }[] = $state([]);
+	let items: { file: File; title: string; description: string; group_id: string }[] = $state([]);
 	let isUploading = $state(false);
 
 	function handleFileSelect(event: Event) {
@@ -12,7 +12,8 @@
 			const newItems = Array.from(target.files).map((file) => ({
 				file,
 				title: file.name.split('.')[0], // Default title from filename
-				description: ''
+				description: '',
+				group_id: ''
 			}));
 			items = [...items, ...newItems];
 			// Reset input so same files can be selected again if needed (though unlikely for this flow)
@@ -22,6 +23,15 @@
 
 	function removeItem(index: number) {
 		items = items.filter((_, i) => i !== index);
+	}
+
+	function generateGroupId() {
+		return crypto.randomUUID();
+	}
+
+	function groupAll() {
+		const groupId = generateGroupId();
+		items = items.map((item) => ({ ...item, group_id: groupId }));
 	}
 
 	async function uploadAll() {
@@ -36,6 +46,9 @@
 				formData.append('image', item.file);
 				formData.append('title', item.title);
 				formData.append('description', item.description);
+				if (item.group_id) {
+					formData.append('group_id', item.group_id);
+				}
 				// Add default values if needed, e.g. enabled=true
 				formData.append('enabled', 'true');
 
@@ -72,6 +85,14 @@
 		<p class="text-sm opacity-70">Select multiple images to start. You can edit details below.</p>
 	</div>
 
+	{#if items.length > 1}
+		<div class="flex justify-end mb-4">
+			<button class="btn preset-tonal-secondary" onclick={groupAll} disabled={isUploading}>
+				Group All Items
+			</button>
+		</div>
+	{/if}
+
 	{#if items.length > 0}
 		<div class="grid grid-cols-1 gap-4 mb-6">
 			{#each items as item, i}
@@ -96,6 +117,26 @@
 								bind:value={item.description}
 								disabled={isUploading}
 							></textarea>
+						</label>
+						<label class="label">
+							<span>Group ID</span>
+							<div class="flex gap-2">
+								<input
+									class="input"
+									type="text"
+									bind:value={item.group_id}
+									disabled={isUploading}
+									placeholder="Optional group ID"
+								/>
+								<button
+									class="btn-icon preset-tonal"
+									onclick={() => (item.group_id = generateGroupId())}
+									disabled={isUploading}
+									title="Generate new Group ID"
+								>
+									🎲
+								</button>
+							</div>
 						</label>
 					</div>
 					<button
