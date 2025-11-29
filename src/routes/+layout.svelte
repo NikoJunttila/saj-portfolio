@@ -1,7 +1,7 @@
 <script lang="ts">
 	import './layout.css';
 	import { goto } from '$app/navigation';
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '$lib/assets/porfolio_logo_32x32.webp';
 	import { pb } from '$lib/pocketbase';
 	import { onNavigate } from '$app/navigation';
 	import { siteConfig } from '$lib/config';
@@ -81,9 +81,33 @@
 </script>
 
 <svelte:head>
+	<title>SAJ Art Commissions</title>
 	<link rel="icon" href={favicon} />
-</svelte:head>
+	<meta
+		name="description"
+		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
+	/>
 
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://sajportfolio.com/" />
+	<meta property="og:title" content="Art Commissions" />
+	<meta
+		property="og:description"
+		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
+	/>
+	<meta property="og:image" content="https://sajportfolio.com/meta.webp" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://sajportfolio.com/" />
+	<meta property="twitter:title" content="Art Commissions" />
+	<meta
+		property="twitter:description"
+		content="Bring your characters to life with high-quality, custom illustrations. Specializing in character design and expressive poses."
+	/>
+	<meta property="twitter:image" content="https://sajportfolio.com/meta.webp" />
+</svelte:head>
 <header
 	style="view-transition-name: header;"
 	class="p-4 border-b border-surface-300/50 dark:border-surface-700/50 sticky top-0 z-50 w-full backdrop-blur-md bg-surface-50/95 dark:bg-surface-900/95 text-surface-900 dark:text-surface-50 transition-all duration-200"
@@ -94,7 +118,10 @@
 			<a
 				href="/"
 				onclick={closeMenu}
-				class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">SAJ</a
+				class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex gap-2"
+			>
+				<img src="/logo.webp" alt="saj logo" height="32" width="32" />
+				SAJ</a
 			>
 			<!-- Mobile Status Indicator -->
 			<a
@@ -112,10 +139,14 @@
 
 		<!-- Desktop Navigation -->
 		<nav class="hidden md:flex gap-6 items-center w-full">
+			<a href="/">
+				<img src="/logo.webp" alt="saj logo" height="32" width="32" />
+			</a>
 			<a
 				href="/"
 				class="anchor font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-				>Home</a
+			>
+				Home</a
 			>
 			<a
 				href="/gallery"
