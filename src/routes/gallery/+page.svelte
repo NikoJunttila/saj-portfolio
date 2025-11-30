@@ -155,22 +155,27 @@
 
 	function handleTouchStart(e: TouchEvent) {
 		touchStartX = e.changedTouches[0].screenX;
+		console.log('Touch start:', touchStartX);
 	}
 
 	function handleTouchEnd(e: TouchEvent) {
 		touchEndX = e.changedTouches[0].screenX;
+		console.log('Touch end:', touchEndX);
 		handleSwipe();
 	}
 
 	function handleSwipe() {
 		const distance = touchEndX - touchStartX;
+		console.log('Swipe distance:', distance);
 		if (Math.abs(distance) < minSwipeDistance) return;
 
 		if (distance > 0) {
 			// Swiped Right -> Prev
+			console.log('Swiped Right -> Prev');
 			prevImage();
 		} else {
 			// Swiped Left -> Next
+			console.log('Swiped Left -> Next');
 			nextImage();
 		}
 	}
@@ -282,6 +287,8 @@
 		class="fixed inset-0 z-50 flex items-center justify-center p-4"
 		role="dialog"
 		aria-modal="true"
+		ontouchstart={handleTouchStart}
+		ontouchend={handleTouchEnd}
 	>
 		<!-- Backdrop -->
 		<div
@@ -292,8 +299,6 @@
 			tabindex="0"
 			aria-label="Close lightbox"
 			onkeydown={(e) => e.key === 'Enter' && closeLightbox()}
-			ontouchstart={handleTouchStart}
-			ontouchend={handleTouchEnd}
 		></div>
 
 		<!-- Navigation Buttons -->
