@@ -48,7 +48,10 @@
 				Interested in commissioning a piece? Contact me via Instagram DMs to discuss your project,
 				share your ideas, and get a personalized quote!
 			</p>
-			<a href={siteConfig.socials.instagram} class="btn preset-filled-primary-500 btn-lg">
+			<a
+				href={siteConfig.socials.instagram}
+				class="btn preset-filled-primary-500 btn-lg w-full sm:w-auto h-auto whitespace-normal text-center"
+			>
 				Contact Me on Instagram
 			</a>
 		</div>
