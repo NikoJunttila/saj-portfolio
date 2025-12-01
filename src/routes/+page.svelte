@@ -1,17 +1,19 @@
 <script lang="ts">
 	// Landing Page
 	let selectedImage: string | null = $state(null);
-	import { fly, fade } from 'svelte/transition';
 </script>
 
 <!-- Hero Section -->
 <section class="relative h-screen w-full overflow-hidden">
 	<!-- Video Background -->
-	<img
-		class="absolute top-0 left-0 w-full h-full object-cover z-0"
-		src="/city_streets.webp"
-		alt="City streets"
-	/>
+	<!-- Video Background -->
+	<div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+		<img
+			class="w-full h-full object-cover animate-ken-burns"
+			src="/city_streets.webp"
+			alt="City streets"
+		/>
+	</div>
 
 	<!-- Overlay -->
 	<div
@@ -21,22 +23,19 @@
 			class="bg-black/30 p-6 md:p-10 rounded-3xl backdrop-blur-sm max-w-5xl w-[90%] md:w-auto mx-auto mb-8"
 		>
 			<h1
-				in:fly={{ y: 20, duration: 800, delay: 200 }}
-				class="h1 text-2xl md:text-6xl lg:text-8xl font-bold text-white mb-4 drop-shadow-xl leading-tight"
+				class="h1 text-2xl md:text-6xl lg:text-8xl font-bold text-white mb-4 drop-shadow-xl leading-tight animate-slide-up animation-delay-200"
 			>
 				Art Commissions
 			</h1>
 			<p
-				in:fly={{ y: 20, duration: 800, delay: 400 }}
-				class="text-xl md:text-2xl lg:text-3xl text-white/95 max-w-3xl mx-auto drop-shadow-lg font-medium"
+				class="text-xl md:text-2xl lg:text-3xl text-white/95 max-w-3xl mx-auto drop-shadow-lg font-medium animate-slide-up animation-delay-500"
 			>
 				Bring your characters to life with high-quality, custom illustrations.
 			</p>
 		</div>
 		<a
-			in:fly={{ y: 20, duration: 800, delay: 600 }}
 			href="/commissions"
-			class="btn preset-filled-primary-500 btn-lg text-lg px-8 py-4 shadow-xl hover:scale-105 transition-transform"
+			class="btn preset-filled-primary-500 btn-lg text-lg px-8 py-4 shadow-xl hover:scale-105 transition-transform animate-slide-up animation-delay-800"
 		>
 			Commission Me
 		</a>

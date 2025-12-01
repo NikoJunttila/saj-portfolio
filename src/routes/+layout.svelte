@@ -109,8 +109,8 @@
 	<meta property="twitter:image" content="https://sajportfolio.com/meta.webp" />
 </svelte:head>
 <header
+	class="animate-slide-down p-4 border-b border-surface-300/50 dark:border-surface-700/50 sticky top-0 z-50 w-full backdrop-blur-md bg-surface-50/95 dark:bg-surface-900/95 text-surface-900 dark:text-surface-50 transition-all duration-200"
 	style="view-transition-name: header;"
-	class="p-4 border-b border-surface-300/50 dark:border-surface-700/50 sticky top-0 z-50 w-full backdrop-blur-md bg-surface-50/95 dark:bg-surface-900/95 text-surface-900 dark:text-surface-50 transition-all duration-200"
 >
 	<div class="flex justify-between items-center">
 		<!-- Mobile Brand -->

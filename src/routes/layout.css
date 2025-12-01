@@ -8,6 +8,63 @@
 
 @custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
+@keyframes ken-burns {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1.1);
+	}
+}
+
+.animate-ken-burns {
+	animation: ken-burns 20s ease-out forwards;
+}
+
+@keyframes slide-up-fade {
+	0% {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slide-down-fade {
+	0% {
+		transform: translateY(-20px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.animate-slide-up {
+	opacity: 0; /* Start hidden */
+	animation: slide-up-fade 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-slide-down {
+	opacity: 0; /* Start hidden */
+	animation: slide-down-fade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animation-delay-200 {
+	animation-delay: 200ms;
+}
+
+.animation-delay-500 {
+	animation-delay: 500ms;
+}
+
+.animation-delay-800 {
+	animation-delay: 800ms;
+}
+
 /* View Transitions API - Page transitions */
 /* Keep header static during transitions */
 ::view-transition-old(header),
