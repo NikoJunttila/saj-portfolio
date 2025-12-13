@@ -60,10 +60,10 @@
 		</div>
 		<button
 			class="card p-2 variant-glass-surface shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 cursor-zoom-in"
-			onclick={() => (selectedImage = '/comm_ref.webp')}
+			onclick={() => (selectedImage = '/comm_ref.png')}
 		>
 			<img
-				src="/comm_ref.webp"
+				src="/comm_ref.png"
 				alt="Commission Reference"
 				class="w-full h-auto rounded-container-token"
 			/>
