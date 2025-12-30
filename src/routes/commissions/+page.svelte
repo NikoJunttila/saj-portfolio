@@ -34,7 +34,7 @@
 <div class="container mx-auto p-4">
 	<!-- Hero Section -->
 	<div class="text-center mb-12">
-		<h1 class="h1 mb-6">Commissions</h1>
+		<h1 class="h2 md:h1 mb-6">Commissions</h1>
 		<div
 			class="card p-8 max-w-3xl mx-auto bg-gradient-to-br from-primary-500/10 to-secondary-500/10 border-2 border-primary-500/20"
 		>
@@ -43,7 +43,7 @@
 					<MessageCircle class="w-8 h-8 text-primary-500" />
 				</div>
 			</div>
-			<h2 class="h2 mb-4">Ready to Commission?</h2>
+			<h2 class="h3 md:h2 mb-4">Ready to Commission?</h2>
 			<p class="text-lg mb-6 opacity-90">
 				Interested in commissioning a piece? Contact me via Instagram DMs to discuss your project,
 				share your ideas, and get a personalized quote!
