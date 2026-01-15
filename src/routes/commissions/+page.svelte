@@ -5,12 +5,12 @@
 	import { MessageCircle, Palette, Clock } from '@lucide/svelte';
 
 	let commissions: RecordModel[] = $state([]);
-	let filterStatus: 'all' | 'completed' | 'in_progress' = $state('all');
+	let filterStatus: 'all' | 'Done' | 'in_progress' = $state('all');
 
 	let filteredCommissions = $derived(
 		commissions.filter((c) => {
 			if (filterStatus === 'all') return true;
-			if (filterStatus === 'completed') return c.completed;
+			if (filterStatus === 'Done') return c.completed;
 			if (filterStatus === 'in_progress') return !c.completed;
 			return true;
 		})
@@ -81,10 +81,10 @@
 					In Progress
 				</button>
 				<button
-					class="btn btn-sm {filterStatus === 'completed'
+					class="btn btn-sm {filterStatus === 'Done'
 						? 'bg-success-500 text-white'
 						: 'variant-ghost-surface'}"
-					onclick={() => (filterStatus = 'completed')}
+					onclick={() => (filterStatus = 'Done')}
 				>
 					Completed
 				</button>
