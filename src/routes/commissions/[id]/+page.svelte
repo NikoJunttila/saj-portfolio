@@ -53,14 +53,24 @@
 	</a>
 
 	{#if commission}
-		<div class="mb-8 text-center">
+		<div class="mb-8 text-center text-wrap mx-4">
 			<h1 class="h1 mb-2">{commission.title}</h1>
 			<div class="flex flex-wrap gap-2 justify-center mb-4">
 				{#if commission.type}
-					<span class="badge variant-soft-secondary">Type: {commission.type}</span>
+					<span
+						class="badge variant-soft-primary
+         whitespace-normal
+         break-words
+         min-w-0
+         max-w-full"
+					>
+						Type: {commission.type}
+					</span>
 				{/if}
 				{#if commission.status}
-					<span class="badge variant-soft-primary">Status: {commission.status}</span>
+					<span class="badge variant-soft-primary break-words max-w-full">
+						Status: {commission.status}
+					</span>
 				{/if}
 			</div>
 			{#if commission.client}
@@ -76,10 +86,8 @@
 			/>
 		</div>
 
-		<h2 class="h2 mb-4">Commission Gallery</h2>
-		{#if images.length === 0}
-			<p class="text-center opacity-50">No images in this commission.</p>
-		{:else}
+		{#if images.length !== 0}
+			<h2 class="h2 mb-4">Commission Gallery</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 				{#each images as image (image.id)}
 					<div class="card p-4 flex flex-col gap-2">
@@ -100,7 +108,5 @@
 				{/each}
 			</div>
 		{/if}
-	{:else}
-		<p class="text-center">Loading...</p>
 	{/if}
 </div>

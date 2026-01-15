@@ -125,21 +125,23 @@
 
 						<!-- Content -->
 						<div class="p-5 space-y-3">
-							<h3 class="h3 font-bold line-clamp-1 group-hover:text-primary-500 transition-colors">
+							<h3 class="h3 break-words font-bold group-hover:text-primary-500 transition-colors">
 								{commission.title || 'Untitled'}
 							</h3>
 
 							<!-- Badges -->
 							<div class="flex flex-wrap gap-2">
 								{#if commission.type}
-									<span class="badge variant-soft-secondary text-xs flex items-center gap-1">
-										<Palette class="w-3 h-3" />
+									<span
+										class="badge break-words whitespace-normal variant-soft-secondary text-xs flex items-center gap-1"
+									>
+										<Palette class="w-5 h-5" />
 										{commission.type}
 									</span>
 								{/if}
 								{#if commission.status}
 									<span class="badge variant-soft-primary text-xs flex items-center gap-1">
-										<Clock class="w-3 h-3" />
+										<Clock class="w-5 h-5" />
 										{commission.status}
 									</span>
 								{/if}
